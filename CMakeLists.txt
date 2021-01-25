@@ -8,3 +8,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories(include)
 
 add_executable(main src/main.cpp)
+add_executable(ptr src/pointer.cpp)

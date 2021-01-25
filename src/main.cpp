@@ -1,6 +1,9 @@
 #include <iostream>
 #include <iomanip>
+#include "student.h"
+
 using namespace std;
+
 // Structures
 
 enum class FormattingChar {
@@ -55,6 +58,13 @@ void print_formatted_num(int i, int j) {
 }
 
 int main() {
+  Student sam ("Sam Smith");
+  Student jane {"Jane Doe", false};
+
+  sam.show();
+  jane.show();
+
+
   MTable big = {12, FormattingChar::Equal};
   MTable small = {6, FormattingChar::Astrisk};
 
