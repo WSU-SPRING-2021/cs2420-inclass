@@ -10,16 +10,14 @@ private:
   bool fulltime;
 
 public:
-  Student(std::string name):id(-1), name(name), fulltime(true){}
-  Student(std::string name, bool ft):id(-1), name(name), fulltime(ft){}
+  Student(std::string name);
+  Student(std::string name, bool ft);
 
-  void show() {
-    std::cout << "ID: " << id << std::endl
-              << "NAME: " << name << std::endl
-              << "FULLTIME: " << fulltime << std::endl;
-  }
+  void show() const;
 
-  ~Student(){}
+  friend std::ostream& operator<<(std::ostream& out, const Student &std);
+
+  ~Student();
 };
 
 #endif

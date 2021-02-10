@@ -6,8 +6,12 @@ int main() {
   Student *sam = new Student("Sam Smith");
   Student *jane = new Student("Jane Doe", false);
 
-  sam->show();
-  jane->show();
+  cout << *sam; // operator<<(cout, *sam)
+  cout << *jane;
+
+
+  cout << *sam << *jane;
+
 
   delete sam;
   delete jane;
