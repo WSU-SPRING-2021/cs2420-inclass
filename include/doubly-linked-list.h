@@ -1,5 +1,5 @@
-#ifndef _SINGLY_LINKED_LIST_H_
-#define _SINGLY_LINKED_LIST_H_
+#ifndef _DOUBLY_LINKED_LIST_H_
+#define _DOUBLY_LINKED_LIST_H_
 #include <iostream>
 #include <initializer_list>
 namespace cs2420 {
@@ -7,11 +7,11 @@ namespace cs2420 {
   struct Node {
     T info;
     Node<T> *next;
+    Node<T> *prev;
 
-    Node(T info):info(info), next(nullptr) {}
-    Node(T info, Node<T> * ptr): info(info), next(ptr) {}
+    Node(T info):info(info), next(nullptr), prev(nullptr) {}
+    Node(T info, Node<T> * nxt, Node<T>* prv): info(info), next(nxt), prev(prv) {}
   };
-
 
   template<typename T>
   class ListIterator {
@@ -26,6 +26,11 @@ namespace cs2420 {
 
     ListIterator<T>& operator++(){
       current = current->next;
+      return *this;
+    }
+
+    ListIterator<T>& operator--(){
+      current = current->prev;
       return *this;
     }
 
@@ -60,10 +65,13 @@ namespace cs2420 {
     }
     
     List<T>& add_front(T info) { // O(1) - constant time
-      front = new Node<T>(info, front);
+      auto node = new Node(info, front, nullptr);
 
       if(!back) {// If list is empty
-        back = front;
+        back = front = node;
+      }else{
+        front->prev = node;
+        front = node;
       }
 
       sz++;
@@ -95,7 +103,7 @@ namespace cs2420 {
     }
 
     List<T>& add_back(T info){ // O(1) - constant
-      auto node = new Node<T>(info);
+      auto node = new Node<T>(info, nullptr, back);
       if(back) { // list is not empty
         back->next = node;
         back = node;
@@ -119,6 +127,7 @@ namespace cs2420 {
       }else{
         auto tmp = front;
         front = tmp->next;
+        front->prev = nullptr;
         delete tmp;
       }
 
@@ -126,7 +135,7 @@ namespace cs2420 {
       return true;
     }
 
-    bool remove_back(){ // O(n)
+    bool remove_back(){ // O(1)
       if(sz == 0) {
         return false;
       }
@@ -135,14 +144,11 @@ namespace cs2420 {
         delete front;
         front = back = nullptr;
       } else {
-        auto pred = front;
-        while(pred->next != back){
-          pred = pred->next;
-        }
+        auto pred = back->pred;
+        pred->next = nullptr;
 
         delete back;
         back = pred;
-        back->next = nullptr;
       }
 
       sz--;
@@ -154,23 +160,19 @@ namespace cs2420 {
 
       if(front->info == info) return remove_front();
 
-      auto pred = front;
       auto current = front->next;
       while(current){
         if(current->info == info){
-          pred->next = current->next;
-          if(!pred->next){
-            back = pred;
+          current->prev->next = current->next;
+          current->next->prev = current->prev;
+          if(current == back){
+            back = current->prev;
           }
 
           delete current;
           sz--;
-
           return true;
         }
-
-
-        pred = current;
         current = current->next;
       }
 
