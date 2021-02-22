@@ -65,7 +65,7 @@ namespace cs2420 {
     }
     
     List<T>& add_front(T info) { // O(1) - constant time
-      auto node = new Node(info, front, nullptr);
+      auto node = new Node<T>(info, front, nullptr);
 
       if(!back) {// If list is empty
         back = front = node;
@@ -115,6 +115,8 @@ namespace cs2420 {
 
       return *this;
     }
+
+    unsigned size() const { return sz; }
 
     bool remove_front(){ // O(1)
       if(sz == 0){
@@ -190,7 +192,7 @@ namespace cs2420 {
       sz = 0u;
     }
 
-    ListIterator<T> begin() {
+    ListIterator<T> begin() const {
       return ListIterator<T>(front);
     }
 
@@ -238,3 +240,6 @@ for(int i : lst){
 }
 */
 #endif
+
+
+
