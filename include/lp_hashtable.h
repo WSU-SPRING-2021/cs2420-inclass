@@ -35,6 +35,10 @@ public:
 
     sz++;
   }
+
+  ~LinearHashtable(){
+    delete[] htable;
+  }
 }
 
 

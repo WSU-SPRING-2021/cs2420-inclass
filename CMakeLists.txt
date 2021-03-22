@@ -1,6 +1,7 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.10)
 
 project(cs2420_inclass_project)
+
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -13,3 +14,6 @@ add_executable(ptr src/pointer.cpp src/student.cpp)
 add_executable(main-stack src/main-stack.cpp)
 add_executable(main-queue src/main-queue.cpp)
 add_executable(maze src/maze.cpp)
+
+add_executable(chained src/chained.cpp)
+add_executable(sort src/main-sort.cpp)
