@@ -4,15 +4,15 @@
 
 namespace cs2420 {
 template <typename T> 
-class SortBySelection : public SortByADT {
+class SortBySelection : public SortByADT<T> {
 public:
-  SortBySelection(Bag<T>& bag): SortByADT(bag){}
-
+  SortBySelection(Bag<T>& bag): SortByADT<T>(bag){}
+  std::string label() { return "Selection"; }
   void sort(bool reversed = false){
-    for(int i = 0; i < sz - 1; i++){
-      int minOrMax = minOrMaxInRange(i, sz, reversed);
-      if(lessOrGreaterThanOperator(minOrMax, i, reversed)){
-        swap(i, minOrMax);
+    for(int i = 0; i < this->items.get_size() - 1; i++){
+      int minOrMax = this->minOrMaxInRange(i, this->items.get_size(), reversed);
+      if(this->lessOrGreaterThanOperator(minOrMax, i, reversed)){
+        this->swap(i, minOrMax);
       }
     }
   }

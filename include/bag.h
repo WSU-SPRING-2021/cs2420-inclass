@@ -20,6 +20,13 @@ public:
     }
   }
 
+  Bag(const Bag<Item>& b): sz(b.sz), capacity(b.capacity) {
+    items = new Item[capacity];
+    for(int i = 0; i < sz; i++){
+      items[i] = b.items[i];
+    }
+  }
+
   Bag<Item>& insert_last(Item i) {
     if(sz == capacity) { // Bag is full
       Item* newItems = new Item[capacity * 2];
@@ -78,55 +85,6 @@ public:
     return out;
   }
 
-  // Sorting algorithms here
-
-  void swap(int i, int j){
-    auto tmp = items[i];
-    items[i] = items[j];
-    items[j] = tmp;
-  }
-
-  bool lessOrGreaterThanOperator(int i, int j, bool reversed = false){
-    return (!reversed && items[i] < items[j]) || (reversed && items[i] > items[j]);
-  }
-
-  void sortByBubble(bool reversed = false){
-    for(int i = 0; i < sz - 1; i++){
-      for(int j = 1; j < sz - i; j++){
-        if(lessOrGreaterThanOperator(j, j - 1, reversed)){
-          swap(j, j-1);
-        }
-      }
-    }
-  }
-
-  int minOrMaxInRange(int begin, int end, bool reversed = false){
-    int minOrMax = begin;
-    for(int i = begin; i < end; i++){
-      if(lessOrGreaterThanOperator(i, minOrMax, reversed)){
-        minOrMax = i;
-      }
-    }
-
-    return minOrMax;
-  }
-
-  void sortBySelection(bool reversed = false){
-    for(int i = 0; i < sz - 1; i++){
-      int minOrMax = minOrMaxInRange(i, sz, reversed);
-      if(lessOrGreaterThanOperator(minOrMax, i, reversed)){
-        swap(i, minOrMax);
-      }
-    }
-  }
-
-  void sortByInsertion(bool reversed = false){
-    for(int i = 1; i < sz; i++){
-      for(int j = i; j > 0 && lessOrGreaterThanOperator(j, j-1, reversed); j--){
-        swap(j, j-1);
-      }
-    }
-  }
 };
 
 #endif

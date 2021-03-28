@@ -4,14 +4,14 @@
 
 namespace cs2420 {
 template <typename T> 
-class SortByInsertion : public SortByADT {
+class SortByInsertion : public SortByADT<T> {
 public:
-  SortByInsertion(Bag<T>& bag): SortByADT(bag){}
-
+  SortByInsertion(Bag<T>& bag): SortByADT<T>(bag){}
+  std::string label() { return "Insertion"; }
   void sort(bool reversed = false){
-    for(int i = 1; i < sz; i++){
-      for(int j = i; j > 0 && lessOrGreaterThanOperator(j, j-1, reversed); j--){
-        swap(j, j-1);
+    for(int i = 1; i < this->items.get_size(); i++){
+      for(int j = i; j > 0 && this->lessOrGreaterThanOperator(j, j-1, reversed); j--){
+        this->swap(j, j-1);
       }
     }
   }

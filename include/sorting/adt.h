@@ -1,5 +1,6 @@
 #ifndef _SORTING_ADT_H_
 #define _SORTING_ADT_H_
+#include <string>
 #include "bag.h"
 
 namespace cs2420 {
@@ -7,7 +8,7 @@ template <typename T>
 class SortByADT {
 public:
   SortByADT(Bag<T>& bag): items(bag){}
-
+  virtual std::string label() = 0;
   virtual void sort(bool reversed = false) = 0;
   virtual ~SortByADT(){}
 

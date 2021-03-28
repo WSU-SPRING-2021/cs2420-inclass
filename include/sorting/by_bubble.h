@@ -4,15 +4,15 @@
 
 namespace cs2420 {
 template <typename T> 
-class SortByBubble : public SortByADT {
+class SortByBubble : public SortByADT<T> {
 public:
-  SortByBubble(Bag<T>& bag): SortByADT(bag){}
-
+  SortByBubble(Bag<T>& bag): SortByADT<T>(bag){}
+  std::string label() { return "Bubble"; }
   void sort(bool reversed = false){
-    for(int i = 0; i < sz - 1; i++){
-      for(int j = 1; j < sz - i; j++){
-        if(lessOrGreaterThanOperator(j, j - 1, reversed)){
-          swap(j, j-1);
+    for(int i = 0; i < this->items.get_size() - 1; i++){
+      for(int j = 1; j < this->items.get_size() - i; j++){
+        if(this->lessOrGreaterThanOperator(j, j - 1, reversed)){
+          this->swap(j, j-1);
         }
       }
     }
