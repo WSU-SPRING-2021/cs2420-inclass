@@ -141,20 +141,51 @@ namespace cs2420 {
       }
       
       if(node) return balance(node);
-      
+
       else return node;
     }
 
     Node<T>* balance(Node<T>* node) {
       // TODO
+      node->height = 1 + std::max(height(node->left), height(node->right));
+      if(height(node->left) - height(node->right) < -1) {// y = right
+        if(height(node->right->left) - height(node->right->right) > 0) { // z = left
+          node->right = rotateRight(node->right);
+        }
+
+        node = rotateLeft(node);
+      } else if(height(node->left) - height(node->right) > 1) {// y = left
+        if(height(node->left->left) - height(node->left->right) < 0) { // z = right
+          node->left = rotateLeft(node->left);
+        }
+
+        node = rotateRight(node);
+      }
+
+      return node;
     }
 
     Node<T>* rotateRight(Node<T>* x) {
       //TODO
+      auto y = x->left;
+      x->left = y->right;
+      y->right = x;
+      x->height = 1 + std::max(height(x->left), height(x->right));
+      y->height = 1 + std::max(height(y->left), height(y->right));
+
+      return y;
+
     }
 
     Node<T>* rotateLeft(Node<T>* x) {
       //TODO
+      auto y = x->right;
+      x->right = y->left;
+      y->left = x;
+      x->height = 1 + std::max(height(x->left), height(x->right));
+      y->height = 1 + std::max(height(y->left), height(y->right));
+
+      return y;
     }
 
     void destroy(Node<T>* &node) {

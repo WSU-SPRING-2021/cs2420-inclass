@@ -17,3 +17,5 @@ add_executable(maze src/maze.cpp)
 
 add_executable(chained src/chained.cpp)
 add_executable(sort src/main-sort.cpp)
+add_executable(bst src/main-bst.cpp)
+add_executable(avl src/main-avl.cpp)

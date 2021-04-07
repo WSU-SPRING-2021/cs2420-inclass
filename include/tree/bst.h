@@ -10,7 +10,7 @@ struct Node {
   Node* right = nullptr;
 };
 
-enum class Tranversal {PREORDER, INORDER, POSTORDER };
+enum class Traversal {PREORDER, INORDER, POSTORDER };
 
 template <typename T>
 class BST {
@@ -24,7 +24,7 @@ public:
   int size(Node<T>* n) const { 
     if(!n) return 0;
 
-    return 1 + sizeD(n->left) + size(n->right);
+    return 1 + size(n->left) + size(n->right);
   }
 
   bool search(T e) const {
@@ -78,7 +78,7 @@ public:
         break;
       }else{
         parent = current;
-        if(e < current-info){
+        if(e < current->info){
           is_left_child = true;
           current = current->left;
         }else{
@@ -91,7 +91,7 @@ public:
     Node<T>* node = current; // The node to be deleted
     if(node){
       if(!node->left && !node->right){ // Leaf node
-        if(is_left_child) parent->left nullptr; else parent->right = nullptr;
+        if(is_left_child) parent->left = nullptr; else parent->right = nullptr;
       }else if(node->left && !node->right){ // No right child
         if(is_left_child) parent->left = node->left; else parent->right = node->left; 
       }else if(!node->left && node->right){ // No left child
@@ -105,7 +105,7 @@ public:
           current = current->right;
         }
 
-        node->info = current->info
+        node->info = current->info;
         if(beforeCurrent){
           beforeCurrent->right = current->left;
         } else {
@@ -120,27 +120,27 @@ public:
     }
   }
 
-  void traverse(Tranversal type, void (*fptr)(const Node<T>* n, int d)) const {
+  void traverse(Traversal type, void (*fptr)(const Node<T>* n, int d)) const {
     traverse(type, root, 0, fptr);
   }
 
-  void traverse(Tranversal type, Node<T>* node, int depth, void (*fptr)(const Node<T>* n, int d)){
+  void traverse(Traversal type, Node<T>* node, int depth, void (*fptr)(const Node<T>* n, int d)) const{
     if(node){
       switch(type){
-      case Tranversal::PREORDER:
-        fptr(n, depth);
+      case Traversal::PREORDER:
+        fptr(node, depth);
         traverse(type, node->left, depth + 1, fptr);
         traverse(type, node->right, depth + 1, fptr);
         break;
-      case Tranversal:: INORDER:
+      case Traversal:: INORDER:
         traverse(type, node->left, depth + 1, fptr);
-        fptr(n, depth);
+        fptr(node, depth);
         traverse(type, node->right, depth + 1, fptr);
         break;
-      case Tranversal::POSTORDER:
+      case Traversal::POSTORDER:
         traverse(type, node->left, depth + 1, fptr);
         traverse(type, node->right, depth + 1, fptr);
-        fptr(n, depth);
+        fptr(node, depth);
         break;
       }
     }
@@ -160,10 +160,10 @@ public:
     destroy(root);
   }
 
-
-
 };
 
 }
 
 #endif
+
+// https://github.com/WSU-SPRING-2021/cs2420-inclass
