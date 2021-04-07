@@ -52,7 +52,8 @@ public:
       while(current){
         parent = current;
         if(current->info == e){
-          throw std::runtime_error("Element is already in the tree");
+          return;
+          //throw std::runtime_error("Element is already in the tree");
         }else if(e < current->info){
           current = current->left;
         } else {

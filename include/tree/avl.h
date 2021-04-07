@@ -3,14 +3,14 @@
 
 namespace cs2420 {
   template <typename T>
-  struct Node {
+  struct AVLNode {
     T info;
     int height;
-    Node *left;
-    Node *right;
-    Node(T info) : info(info), height(0), left(nullptr), right(nullptr) {}
+    AVLNode *left;
+    AVLNode *right;
+    AVLNode(T info) : info(info), height(0), left(nullptr), right(nullptr) {}
     
-    friend std::ostream& operator<<(std::ostream& out, const Node<T>&node){
+    friend std::ostream& operator<<(std::ostream& out, const AVLNode<T>&node){
       for(int i = 0; i < node.height; i++){
         out << "   ";
       }
@@ -39,9 +39,9 @@ namespace cs2420 {
 
     bool empty() const { return root == nullptr; }
     int height() const { return height(root); }
-    int height(const Node<T> *node) const { return node ? node->height : 0; }
+    int height(const AVLNode<T> *node) const { return node ? node->height : 0; }
     int size() const { return size(root); }
-    int size(const Node<T>* node) const {
+    int size(const AVLNode<T>* node) const {
       return node ? 1 + size(node->left) + size(node->right) : 0;
     }
     void preorderTraversal(std::ostream& out) const { 
@@ -54,7 +54,7 @@ namespace cs2420 {
       postorderTraversal(out, root); 
     }
     
-    Node<T>* search(T e) const{
+    AVLNode<T>* search(T e) const{
       auto current = root;
       while(current){
         if(current->info == e) return current;
@@ -78,8 +78,8 @@ namespace cs2420 {
     ~AVLTree(){ destroy(root); }
     
   protected:
-    Node<T> *root;
-    void preorderTraversal(std::ostream& out, const Node<T> *node) const {
+    AVLNode<T> *root;
+    void preorderTraversal(std::ostream& out, const AVLNode<T> *node) const {
       if (node){
         out << *node;
         preorderTraversal(out, node->left);
@@ -87,14 +87,14 @@ namespace cs2420 {
       }
     }
 
-    void inorderTraversal(std::ostream& out, const Node<T> *node ) const{
+    void inorderTraversal(std::ostream& out, const AVLNode<T> *node ) const{
       if(node){
         inorderTraversal(out, node->left);
         out << *node;
         inorderTraversal(out, node->right);
       }
     }
-    void postorderTraversal(std::ostream& out, const Node<T> *node) const {
+    void postorderTraversal(std::ostream& out, const AVLNode<T> *node) const {
       if(node){
         postorderTraversal(out, node->left);
         postorderTraversal(out, node->right);
@@ -102,9 +102,9 @@ namespace cs2420 {
       }
     }
 
-    Node<T>* insert( Node<T>* node, T e){
+    AVLNode<T>* insert( AVLNode<T>* node, T e){
       if(node == nullptr){
-        return new Node<T>(e);
+        return new AVLNode<T>(e);
       }else if(e < node->info) {
         node->left = insert(node->left, e);
       }else if(e > node->info) {
@@ -116,7 +116,7 @@ namespace cs2420 {
 
       return balance(node);
     } 
-    Node<T>* remove(Node<T>* node, T e){
+    AVLNode<T>* remove(AVLNode<T>* node, T e){
       if(!node) {
         return node;
       } else if(e < node->info){
@@ -145,7 +145,7 @@ namespace cs2420 {
       else return node;
     }
 
-    Node<T>* balance(Node<T>* node) {
+    AVLNode<T>* balance(AVLNode<T>* node) {
       // TODO
       node->height = 1 + std::max(height(node->left), height(node->right));
       if(height(node->left) - height(node->right) < -1) {// y = right
@@ -165,7 +165,7 @@ namespace cs2420 {
       return node;
     }
 
-    Node<T>* rotateRight(Node<T>* x) {
+    AVLNode<T>* rotateRight(AVLNode<T>* x) {
       //TODO
       auto y = x->left;
       x->left = y->right;
@@ -177,7 +177,7 @@ namespace cs2420 {
 
     }
 
-    Node<T>* rotateLeft(Node<T>* x) {
+    AVLNode<T>* rotateLeft(AVLNode<T>* x) {
       //TODO
       auto y = x->right;
       x->right = y->left;
@@ -188,7 +188,7 @@ namespace cs2420 {
       return y;
     }
 
-    void destroy(Node<T>* &node) {
+    void destroy(AVLNode<T>* &node) {
       if (node){
         destroy(node->left);
         destroy(node->right);
@@ -197,9 +197,9 @@ namespace cs2420 {
         node = nullptr;
       }
     }
-    void copy(Node<T> *&dest, const Node<T> *src) {
+    void copy(AVLNode<T> *&dest, const AVLNode<T> *src) {
       if (src){
-        dest = new Node<T>(src->info);
+        dest = new AVLNode<T>(src->info);
         copy(dest->left, src->left);
         copy(dest->right, src->right);
       } else {
@@ -207,8 +207,8 @@ namespace cs2420 {
       }
     }
 
-    const Node<T>* maximum() const { return maximum(root); }
-    const Node<T>* maximum(Node<T>* node) const {
+    const AVLNode<T>* maximum() const { return maximum(root); }
+    const AVLNode<T>* maximum(AVLNode<T>* node) const {
       if(node){
         while(node->right){
           node = node->right;
