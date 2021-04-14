@@ -25,8 +25,8 @@ int main(){
   chrono::duration<double, nano> avl_time;
   chrono::duration<double, nano> bst_time;
 
-  int nums[100];
-  for(int i = 0; i < 100; i++){
+  int nums[1000];
+  for(int i = 0; i < 1000; i++){
     nums[i] = rdist(en);
   }
 
