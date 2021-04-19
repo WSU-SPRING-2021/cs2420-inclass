@@ -12,6 +12,7 @@ protected:
 public:
   Digraph(int v): Graph(v), indegree(new int[v]){}
 
+  virtual bool directed() { return true; }
 
   virtual void addEdge(int v, int w){
     Graph::addEdge(v, w);

@@ -19,6 +19,8 @@ public:
   int V() { return _V; }
   int E() { return _E; }
 
+  virtual bool directed() { return false; }
+
   std::list<int>& adjList(int v){
     return adj[v];
   }

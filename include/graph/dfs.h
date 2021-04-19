@@ -2,6 +2,7 @@
 #define _DEPTH_FIRST_SEARCH_H
 
 #include "graph.h"
+#include <vector>
 
 namespace cs2420 {
 enum class VColor { White, Grey, Black };
@@ -21,19 +22,34 @@ public:
     }
   }
 
+  std::vector<int> topologicalOrder(){
+    if(!g.directed()){
+      throw std::runtime_error("Graph must be directed");
+    }
+    std::vector<int> t;
+    for(int i = post.size() - 1; i >= 0; i--){
+      t.push_back(post[i]);
+    }
+
+    return t;
+  }
+  std::vector<int> postorder() { return post; }
+  std::vector<int> preorder() { return pre; }
+  
   ~DepthFirstSearch(){
     delete [] attr;
   }
 private:
   Graph& g;
   VertexAttr* attr;
+  std::vector<int> pre, post;
 
   void dfs(int u){
     static int time = 0;
 
     attr[u].color = VColor::Grey;
     attr[u].stime = ++time;
-
+    pre.push_back(u);
     for(int v : g.adjList(u)){
       if(attr[v].color == VColor::White){
         dfs(v);
@@ -42,6 +58,7 @@ private:
 
     attr[u].color = VColor::Black;
     attr[u].ftime = ++time;
+    post.push_back(u);
   }
 };
 

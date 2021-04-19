@@ -51,6 +51,7 @@
     "typeinfo": "cpp",
     "chrono": "cpp",
     "ratio": "cpp",
-    "list": "cpp"
+    "list": "cpp",
+    "fstream": "cpp"
   }
 }
