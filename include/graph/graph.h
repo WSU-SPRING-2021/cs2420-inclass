@@ -19,12 +19,15 @@ public:
   int V() { return _V; }
   int E() { return _E; }
 
+  std::list<int>& adjList(int v){
+    return adj[v];
+  }
+
   virtual void addEdge(int v, int w){
     if(v < 0 || v >= _V) return;
     if(w < 0 || w >= _V) return;
 
     adj[v].push_back(w);
-    // adj[w].push_back(v);
      _E++;
   }
 
@@ -33,7 +36,6 @@ public:
     if(w < 0 || w >= _V) return;
 
     adj[v].remove(w);
-    adj[w].remove(v);
     _E--;
   }
 
@@ -71,6 +73,10 @@ public:
     }
 
     return out;
+  }
+
+  virtual ~Graph(){
+    delete [] adj;
   }
 
 };
